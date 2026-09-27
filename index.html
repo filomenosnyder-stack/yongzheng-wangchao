@@ -1,0 +1,996 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+     雍正王朝（1999）· 卡面
+     ─────────────────────────────────────────────────────────────────
+     美术方向：低照度宫廷
+       这个剧的本体是「雪夜 · 一支烛 · 深殿」，所以卡面不是「暗色网页」，
+       是一层层压下去的黑，中间几处烛光。
+       · 底：压暗渐层 + 暗角（不是平涂）
+       · 烛黄 #D9A441 只给三样：当前页签 / 章节竖标 / 关键句
+       · 血红 #9B2620 只标「死」和「危险」
+       · 去掉盒子，用界格线（奏折行格）
+       · 章节标题竖排
+     ─────────────────────────────────────────────────────────────────
+     ⚠ 踩过的坑：
+        1. 页签必须 JS 驱动 —— 平台不认纯 CSS radio
+        2. 面板默认【展开】，绑完才加 .js 收起来（否则脚本一死就白屏）
+        3. 这个引擎对表格硬套 color:black，不继承父级 → table/th/td 三级写死
+        4. 视频不能跨出卡片目录（file:// 会被拦）→ 放 frontend/assets/
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="yz">
+
+  <!-- ══════════ 封面 ══════════ -->
+  <div class="yz-cover" id="yzCover" role="button" tabindex="0" aria-label="点击入局">
+    <div class="yz-cv-bg" aria-hidden="true"></div>
+    <div class="yz-cv-frame">
+      <img data-photo="poster.jpg" alt="雍正王朝">
+      <div class="yz-cv-shade" aria-hidden="true"></div>
+    </div>
+    <div class="yz-cv-in">
+      <div class="yz-cv-v">康 熙 六 十 一 年 —— 雍 正 十 三 年</div>
+      <div class="yz-cv-go">点 击 入 局</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 对峙 · 左雍正 / 右八贤王 ══════════ -->
+  <section class="yz-face" id="yzFace">
+    <div class="yz-face-hd">
+      <span class="yz-face-h1">同一个位子</span>
+      <span class="yz-face-h2">两种下场</span>
+    </div>
+
+    <!-- ⚠ 永远左右两块，任何宽度都不折成上下 -->
+    <div class="yz-face-row">
+      <!-- 左 · 四阿哥 -->
+      <div class="yz-fs" data-side="win">
+        <div class="yz-stage">
+          <img class="yz-photo" data-photo="yongzheng.jpg" alt="四阿哥 雍正">
+          <!-- ⚠ 不静音 —— 是「点了才播」，属用户手势，浏览器允许出声 -->
+          <video id="vidWin" playsinline preload="metadata" loop
+                 data-video="si-age-full.mp4"></video>
+          <div class="yz-play" aria-hidden="true">▶</div>
+        </div>
+        <div class="yz-fs-name">四阿哥 · 胤禛</div>
+        <div class="yz-fs-src">第 20 集 · 康熙驾崩夜</div>
+      </div>
+
+      <!-- 右 · 八阿哥 -->
+      <div class="yz-fs" data-side="lose">
+        <div class="yz-stage">
+          <img class="yz-photo" data-photo="yinsi.jpg" alt="八阿哥 胤禩">
+          <video id="vidLose" playsinline preload="metadata" loop
+                 data-video="ba-xianwang-full.mp4"></video>
+          <div class="yz-play" aria-hidden="true">▶</div>
+        </div>
+        <div class="yz-fs-name">八阿哥 · 胤禩</div>
+        <div class="yz-fs-src">第 41 集 · 八王议政之后</div>
+      </div>
+    </div>
+
+    <div class="yz-face-dlg">
+      <div class="yz-dl yz-dl-l">
+        <p>「谁的兵先控制局面，<br>谁就是下一任皇帝。」</p>
+      </div>
+      <div class="yz-face-seam2" aria-hidden="true"></div>
+      <div class="yz-dl yz-dl-r">
+        <p>「可你呢 ——<br>你倒成了贤王，成了雍正的好臣。」</p>
+      </div>
+    </div>
+
+    <div class="yz-face-end">
+      你赢了，赢在你是皇上。<br>
+      但是你应该清楚 —— <b>如果不用这一手，你是赢不了的。</b>
+    </div>
+  </section>
+
+  <!-- ══════════ 标题 ══════════ -->
+  <header class="yz-hero">
+    <h1>雍正<em>王朝</em></h1>
+    <p class="yz-hero-sub">1722 — 1735 ｜ 四十四集 ｜ 刘和平 · 二月河 编剧 · 胡玫 导演</p>
+    <p class="yz-hero-line">
+      上半部问「谁坐那个位子」<br>下半部问「坐上去之后，你敢动谁的饭碗」
+    </p>
+  </header>
+
+  <!-- ══════════ 页签 ══════════ -->
+  <nav class="yz-nav" id="yzNav">
+    <button class="yz-tab on" data-go="p-xu">序</button>
+    <button class="yz-tab" data-go="p-mu">幕</button>
+    <button class="yz-tab" data-go="p-ren">人</button>
+    <button class="yz-tab" data-go="p-shi">势</button>
+    <button class="yz-tab" data-go="p-gui">规</button>
+    <button class="yz-tab" data-go="p-kai">开局</button>
+  </nav>
+
+  <main class="yz-body">
+
+    <!-- ════════ 序 ════════ -->
+    <section class="yz-panel on" id="p-xu">
+      <div class="yz-sec"><span class="yz-sec-v">引</span>
+        <div class="yz-sec-b">
+          <p class="yz-lead">
+            公元 1722 年，康熙驾崩。继位者不是当了近四十年太子的二阿哥胤礽，
+            不是贤名远扬的八阿哥胤禩，也不是深受钟爱的大将军王十四阿哥胤禵 ——
+            而是素有「冷面王」之称的四阿哥胤禛。
+          </p>
+          <div class="yz-warn">
+            <b>这张卡采信的是「剧」，不是史实。</b>
+            剧中最大的虚构是「八王议政」（历史上没有这件事），弘时之死也改过（史书是削宗籍后病死）。
+            史实只用来核对器物、制度、称谓。
+          </div>
+        </div>
+      </div>
+
+      <div class="yz-sec"><span class="yz-sec-v">六条理</span>
+        <div class="yz-sec-b">
+          <p class="yz-note">这不是设定，是物理定律。它们不讲对错，只讲结果 —— 好人照撞，坏人照撞，结果一样。</p>
+
+          <div class="yz-li">
+            <h3>① 话说出口的那一刻，就已经输了</h3>
+            <p>野心只能做，不能说。说出来它就从「想法」变成「罪状」—— 因为你一表态，所有没表态的人就都有了敌人。</p>
+            <p class="yz-eg">大阿哥第一个跳出来建议杀太子，他是第一个被圈的。八阿哥让术士说「八」是「八大王」，自己心中暗喜 —— 喜的那一刻他已经在往坑里走。四阿哥说的是「儿臣愿做孤臣」。</p>
+            <p class="yz-use"><b>推演</b>　玩家每次明确表态要什么，暗处记一笔账。表得越响，将来收账的人越多。</p>
+          </div>
+
+          <div class="yz-li">
+            <h3>② 一呼百应的人，永远坐不上那个位子</h3>
+            <p>不是皇帝怕你，是「你上去了，那个党就成了朝廷」。康熙对胤禛的原话：<b>「朕要你去做真正的孤臣。」</b></p>
+            <p class="yz-eg">八阿哥贤名满天下、满朝保举 —— 所以他出局。他输的不是能力，是人望。隆科多宣了遗诏、定了新君，然后被圈禁。</p>
+            <p class="yz-use"><b>推演</b>　「人心」不是资源，是负债。玩家每多收一个心腹，都要问：这份人心，皇帝知道吗？不知道的，叫私党。</p>
+          </div>
+
+          <div class="yz-li">
+            <h3>③ 办成的事越大，要还的越多</h3>
+            <p>功劳不是护身符，是欠条。</p>
+            <p class="yz-eg">年羹尧打下西北 → 赐自尽，而他到死都穿着黄马褂，因为他真的以为那件衣服算数。八阿哥替康熙管了二十年事 → 改名「阿其那」。十三阿哥最能干 → 累死，他是全剧唯一「还得起」的人，因为他用命还的。</p>
+            <p class="yz-use"><b>推演</b>　玩家每办成一件事，立刻记一张欠条。它不立刻兑现 —— 要等玩家最需要安全的时候才到期。</p>
+          </div>
+
+          <div class="yz-li">
+            <h3>④ 你动的不是坏人，是所有本来就过得下去的人</h3>
+            <p>雍正推新政，站在他对面的不是几个奸臣，是整个士绅 + 全部旗人 + 所有本来不用交税的人。而这些人里，很多是昨天刚把他抬上去的。</p>
+            <p class="yz-eg">「请杀年羹尧以谢天下疏」和「请罢田文镜以谢天下疏」，签名惊人地相似 —— 同一批人，同一个理由，杀一个武人、罢一个酷吏，而这两件事毫无关系。</p>
+            <p class="yz-use"><b>推演</b>　不要给玩家一个「大反派」。反派是一群人，每一个单独看都讲得通。<b>做对了，也未必有好下场。</b></p>
+          </div>
+
+          <div class="yz-li">
+            <h3>⑤ 知道得越多，越没有活路</h3>
+            <p>在这部剧里，死掉的人几乎都死于「知道」。</p>
+            <p class="yz-eg">高福知道《百官行述》的真相 → 死。年羹尧知道江夏镇那七百多口是谁下的令 → 死（下令的人就是雍正）。张廷璐知道恩科泄题的主使是弘时 → 替主子扛着死。邬思道什么都知道 → 所以他主动消失。</p>
+            <p class="yz-use"><b>推演</b>　本卡里没有「我知道真相，我揭发」这条路 —— 因为揭发的对象，通常就是给你真相的那个人。</p>
+          </div>
+
+          <div class="yz-li">
+            <h3>⑥ 你听到的每一个字，都可能被人换过</h3>
+            <p>这不是比喻。在这部剧里，信息是可以被掉包的实物。</p>
+            <p class="yz-eg">康熙说的是「传位于四子」，八爷党听见的是「传位于十四子」。胤禵送来一颗带「寿」字的天石，半路被换成了一具死鹰。民间说雍正「弑父逼母屠弟」—— 而这三件事每一件都「像真的」。</p>
+            <p class="yz-use"><b>推演</b>　不要给玩家「客观旁白」。所有情报都必须注明来源，而每一个来源都有立场。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="yz-coda">
+        做事的得罪人，不做事的长久；说出来的办不成，办成的要还账；<br>
+        有用的被收走，知情的被灭口；而你听到的每一个字，都得先当成假的。<br>
+        <b>—— 而最狠的一条是：就算你把每一件事都做对了，账还是得还。</b>
+      </div>
+    </section>
+
+    <!-- ════════ 幕 ════════ -->
+    <section class="yz-panel" id="p-mu">
+      <div class="yz-sec"><span class="yz-sec-v">四十一幕</span>
+        <div class="yz-sec-b">
+          <p class="yz-note">覆盖全剧四十四集。切幕的标准是「局势变了就回不去」的那一下。点开看每一幕的<b>机关</b>。</p>
+          <div class="yz-mus" id="yzMus"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ 人 ════════ -->
+    <section class="yz-panel" id="p-ren">
+      <div class="yz-sec"><span class="yz-sec-v">人</span>
+        <div class="yz-sec-b">
+          <p class="yz-note">二十八个人。点一张看他「要什么」和「怕什么」。</p>
+          <div class="yz-people" id="yzPeople"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ 势 ════════ -->
+    <section class="yz-panel" id="p-shi">
+      <div class="yz-sec"><span class="yz-sec-v">九子</span>
+        <div class="yz-sec-b">
+          <table class="yz-tw">
+            <thead><tr><th>谁</th><th>他要什么</th><th>他的死法</th></tr></thead>
+            <tbody>
+              <tr><td><b>大阿哥 胤禔</b></td><td>名分</td><td>革爵，圈禁</td></tr>
+              <tr><td><b>二阿哥 胤礽</b></td><td>时间</td><td>两次被废，永远圈禁</td></tr>
+              <tr><td><b>三阿哥 胤祉</b></td><td>不掺和</td><td>雍正朝被派去抄兄弟的家 —— 不争的人也不安全</td></tr>
+              <tr><td><b>四阿哥 胤禛</b></td><td>办成事</td><td>死在奏折堆里</td></tr>
+              <tr><td><b>八阿哥 胤禩</b></td><td>认可</td><td>被改名叫「阿其那」，从族谱上删掉</td></tr>
+              <tr><td><b>九阿哥 胤禟</b></td><td>跟着八哥</td><td>改名「塞思黑」，死在圈禁中</td></tr>
+              <tr><td><b>十阿哥 胤䄉</b></td><td>跟着八哥</td><td>抄家，圈禁</td></tr>
+              <tr class="hi"><td><b>十三阿哥 胤祥</b></td><td>世道有人管</td><td>累死 —— 唯一一个死得及时的人</td></tr>
+              <tr><td><b>十四阿哥 胤禵</b></td><td>赢</td><td>被软禁，守陵，活到乾隆朝</td></tr>
+            </tbody>
+          </table>
+          <p class="yz-cf">他们的死法，都是他们「要法」的反义词。</p>
+        </div>
+      </div>
+
+      <div class="yz-sec"><span class="yz-sec-v">三把刀</span>
+        <div class="yz-sec-b">
+          <table class="yz-tw">
+            <thead><tr><th>谁</th><th>出身</th><th>干什么</th><th>下场</th></tr></thead>
+            <tbody>
+              <tr><td><b>田文镜</b></td><td><b>监生</b>（捐来的），被革过职</td><td>河南推官绅一体当差，被全天下恨</td><td>死在雍正前头，没等到清算</td></tr>
+              <tr><td><b>李卫</b></td><td><b>包衣奴才</b>，要饭出身</td><td>江苏推摊丁入亩，会办事，还落个好名声</td><td>同上</td></tr>
+              <tr class="hi"><td><b>年羹尧</b></td><td>雍王府旧人</td><td>西北打仗，二十万大军只听他</td><td>赐自尽</td></tr>
+            </tbody>
+          </table>
+          <p class="yz-cf">雍正只用两种人：被革过职的，和要饭出身的。因为只有这种人敢动士绅 —— 他们自己不是士绅。</p>
+        </div>
+      </div>
+
+      <div class="yz-sec"><span class="yz-sec-v">年表</span>
+        <div class="yz-sec-b">
+          <p class="yz-note">
+            一行一件事，按「年 · 集 · 事」排。
+            ⚠ 剧里为了节奏压缩了时间 —— <b>康熙五十一年的太子二废和第 18 集的大将军王，在剧里只隔一集，史实上差六年</b>。
+            年份按史实标，集数按剧标。
+          </p>
+          <div class="yz-tl">
+            <div class="yz-tl-r"><span>1707 <br>康熙四十六</span><i>1</i>黄河决口。胤禛在户部查出库银不足五十万两</div>
+            <div class="yz-tl-r"><span>1707</span><i>1-2</i>南下扬州筹款 —— 截九阿哥给任伯安的密信，逼盐商捐银</div>
+            <div class="yz-tl-r"><span>1707</span><i>2-3</i>返京过江夏镇，被刘八女用康熙御匾压着低头</div>
+            <div class="yz-tl-r"><span>1708 <br>康熙四十七</span><i>3-4</i>追比国库欠款 ——「朕要你去做真正的孤臣」</div>
+            <div class="yz-tl-r"><span>1708</span><i>4</i>马国成当众撕衣亮伤疤骂田文镜</div>
+            <div class="yz-tl-r"><span>1708</span><i>5</i>魏东亭自尽。康熙从大内拨四十万两替他还款</div>
+            <div class="yz-tl-r"><span>1708</span><i>6</i>太子擅自把十天的还款期限延成两年</div>
+            <div class="yz-tl-r"><span>1708</span><i>7</i>刑部冤狱案，张五哥顶罪，菜市口问斩前被救下</div>
+            <div class="yz-tl-r"><span>1708</span><i>8</i>张廷玉当着康熙的面烧掉胤禩的密折</div>
+            <div class="yz-tl-r"><span>1708</span><i>9</i>热河围场，康熙撞破太子与郑春华</div>
+            <div class="yz-tl-r hi"><span>1708</span><i>10</i><b>第一次废太子</b>。大阿哥因魇镇被贬庶人圈禁</div>
+            <div class="yz-tl-r"><span>1709 <br>康熙四十八</span><i>11</i>百官推举新太子，八阿哥声势最盛</div>
+            <div class="yz-tl-r"><span>1709</span><i>12</i>胤禛保举废太子。佟国维被侄子隆科多参倒</div>
+            <div class="yz-tl-r"><span>1709</span><i>13</i>太子复位监国，康熙第六次南巡</div>
+            <div class="yz-tl-r"><span>1709</span><i>14</i>年羹尧血洗江夏镇，七百余口</div>
+            <div class="yz-tl-r"><span>1709</span><i>15</i>当着三、八、九、十、十四阿哥的面烧《百官行述》</div>
+            <div class="yz-tl-r"><span>1709</span><i>16</i>高福被八爷府胡管家套出真相</div>
+            <div class="yz-tl-r hi"><span>1712 <br>康熙五十一</span><i>17</i><b>太子二废</b>，永远圈禁。十三阿哥被圈，一关十年</div>
+            <div class="yz-tl-r"><span>1718 <br>康熙五十七</span><i>18</i>西北丧师。选大将军王，胤禵出征</div>
+            <div class="yz-tl-r"><span>1721 <br>康熙六十</span><i>19</i>康熙六十八大寿。天石被换成死鹰，康熙昏死</div>
+            <div class="yz-tl-r hi"><span>1722.11 <br>康熙六十一</span><i>20</i><b>康熙驾崩于畅春园 ——「传位于四子」</b></div>
+            <div class="yz-tl-r"><span>1723 <br>雍正元年</span><i>21</i>胤禵闯灵堂。封胤禩为总理王大臣</div>
+            <div class="yz-tl-r"><span>1723</span><i>22-23</i>诺敏案：借山西银号的银子填藩库，账实相符</div>
+            <div class="yz-tl-r"><span>1723</span><i>24</i>田文镜封库贴告示，借银的巨商连夜涌来 —— 破案</div>
+            <div class="yz-tl-r"><span>1724 <br>雍正二年</span><i>25</i>恩科泄题。李绂摘下顶子走出考场</div>
+            <div class="yz-tl-r"><span>1724</span><i>26</i>菜市口观斩。胤祥骂「逢君之恶」，雍正下罪己诏</div>
+            <div class="yz-tl-r"><span>1724</span><i>27</i>中和殿殿试，天黑了，雍正走过去为王文昭掌灯</div>
+            <div class="yz-tl-r"><span>1724</span><i>28</i>刘墨林点探花。年羹尧出任西北绥远大将军</div>
+            <div class="yz-tl-r"><span>1724</span><i>29-30</i>年羹尧一声「去手」，十几只左手落地</div>
+            <div class="yz-tl-r"><span>1724</span><i>30</i>胤禩与户部集体辞职逼出军机处，由胤祥统领</div>
+            <div class="yz-tl-r hi"><span>1725 <br>雍正三年</span><i>31</i><b>卸甲 ——「他们只知道军令，不知道皇上」</b></div>
+            <div class="yz-tl-r"><span>1725</span><i>32</i>田文镜在河南推官绅一体当差；李卫在江苏推摊丁入亩</div>
+            <div class="yz-tl-r"><span>1725</span><i>33</i>孙嘉诚被派往西北，年羹尧杀了他</div>
+            <div class="yz-tl-r hi"><span>1725-26 <br>雍正三—四年</span><i>34-35</i><b>赐死年羹尧</b>。满朝联名上「请杀年羹尧以谢天下疏」</div>
+            <div class="yz-tl-r"><span>1726 <br>雍正四年</span><i>36</i>景陵堆雪人。雍正把乔引娣留在宫中</div>
+            <div class="yz-tl-r"><span>1727 <br>雍正五年</span><i>37</i>先农坛躬耕。旗人领了地转手租给汉人</div>
+            <div class="yz-tl-r"><span>1727</span><i>38-39</i>河南罢考。李绂判死押上菜市口，弘历求情才赦</div>
+            <div class="yz-tl-r"><span>1729 <br>雍正七年</span><i>40</i>雍正把弘历派往江南。胤禩勾结隆科多控制丰台大营</div>
+            <div class="yz-tl-r hi"><span>1729</span><i>41</i><b>八王议政 ——「你赢了，赢在你是皇上」</b>。阿其那 · 塞思黑</div>
+            <div class="yz-tl-r hi"><span>1730 <br>雍正八年</span><i>42</i><b>胤祥之死</b>，遗言「小心弘时」</div>
+            <div class="yz-tl-r"><span>1730</span><i>43</i>隆科多装疯告发。刘墨林死于扬州。穷庐审弘时</div>
+            <div class="yz-tl-r"><span>1729-30</span><i>43-44</i>曾静案。《大义觉迷录》全国宣讲</div>
+            <div class="yz-tl-r hi"><span>1735.8 <br>雍正十三</span><i>44</i><b>雍正暴卒于御案旁，年五十八</b>。案头那颗丹药</div>
+          </div>
+          <p class="yz-cf">
+            ⚠ 两条不是史实：<b>八王议政</b>（历史上没有这件事）、<b>赐死弘时</b>（史书是削宗籍后病死）。
+            写卡时按剧走。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ 规 ════════ -->
+    <section class="yz-panel" id="p-gui">
+      <div class="yz-sec"><span class="yz-sec-v">避讳</span>
+        <div class="yz-sec-b">
+          <p>雍正即位后，为避自己的名讳，兄弟们的「胤」字一律改成「允」。</p>
+          <table class="yz-tw">
+            <thead><tr><th>本名</th><th>雍正朝他称</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>胤禩（八）</td><td><b>允禩</b></td><td>剧中雍正朝一律作「允禩」</td></tr>
+              <tr><td>胤禟（九）</td><td><b>允禟</b></td><td>—</td></tr>
+              <tr><td>胤禵（十四）</td><td><b>允禵</b></td><td>—</td></tr>
+              <tr><td>胤禛（四）</td><td><b>不改</b></td><td>皇帝本人不避自己的讳</td></tr>
+              <tr class="hi"><td><b>胤祥（十三）</b></td><td><b>不改</b></td><td><b>特旨保留「胤」—— 全剧只有他一个人不用避皇帝的讳</b></td></tr>
+            </tbody>
+          </table>
+          <p class="yz-cf">分界线是第 20 集。以前叫「胤禩」，以后叫「允禩」—— 按剧情时间切换。</p>
+        </div>
+      </div>
+
+      <div class="yz-sec"><span class="yz-sec-v">称谓</span>
+        <div class="yz-sec-b">
+          <table class="yz-tw">
+            <thead><tr><th>谁</th><th>对谁</th><th>自称</th></tr></thead>
+            <tbody>
+              <tr><td>皇帝</td><td>任何人</td><td><b>朕</b>（正式）/ <b>我</b>（气急了会忘 —— 第12集康熙拔刀喊的是「我宰了你」）</td></tr>
+              <tr><td><b>满臣</b></td><td>皇帝</td><td><b>奴才</b></td></tr>
+              <tr><td><b>汉臣</b></td><td>皇帝</td><td><b>臣</b></td></tr>
+              <tr class="hi"><td>李卫（包衣）</td><td>雍正</td><td><b>主子</b> —— 他叫「主子」不叫「皇上」，这是他身份的证明</td></tr>
+            </tbody>
+          </table>
+          <p class="yz-cf">别给汉臣写「奴才」，也别给满臣写「臣」—— 这比写错官职还刺眼。<br>
+          「奴才」和「臣」不是谦卑程度，是身份标签。</p>
+        </div>
+      </div>
+
+      <div class="yz-sec"><span class="yz-sec-v">处分</span>
+        <div class="yz-sec-b">
+          <p class="yz-note">在「没事」和「杀头」之间，清朝有一整套梯度。用它，比动不动就杀头真实得多。</p>
+          <table class="yz-tw">
+            <thead><tr><th>处分</th><th>实际后果</th><th>剧里</th></tr></thead>
+            <tbody>
+              <tr><td><b>罚俸</b></td><td>扣工资</td><td>李卫毒打曾静，被雍正罚俸一年</td></tr>
+              <tr><td>降级留任</td><td>降品级但继续管事</td><td>—</td></tr>
+              <tr><td><b>革职留任</b></td><td>革职但继续办事（最羞辱的一档）</td><td>—</td></tr>
+              <tr><td>革职</td><td>免官</td><td>田文镜被革过职</td></tr>
+              <tr><td>交部议处</td><td>交给吏部/刑部走程序</td><td>剧中常见台词</td></tr>
+              <tr><td>发往军台效力</td><td>流放西北驿站当苦差</td><td>—</td></tr>
+              <tr><td>斩监候 / 秋决</td><td>判死，等秋后（不是立即）</td><td>「秋后问斩」</td></tr>
+              <tr class="hi"><td><b>赐自尽</b></td><td>保留体面的死刑</td><td>年羹尧、弘时</td></tr>
+              <tr class="hi"><td><b>斩立决 / 菜市口</b></td><td>公开处决</td><td>诺敏、张廷璐</td></tr>
+              <tr class="hi"><td>圈禁 / 削宗籍</td><td>皇族专用，不走刑部</td><td>胤禩、胤禟、胤禔、胤祥</td></tr>
+            </tbody>
+          </table>
+          <p class="yz-cf">玩家犯了事，别直接杀头。先罚俸，再降级留任，再革职留任，最后才是刀 —— 每一步都给他一次机会。</p>
+        </div>
+      </div>
+
+      <div class="yz-sec"><span class="yz-sec-v">器物</span>
+        <div class="yz-sec-b">
+          <table class="yz-tw">
+            <thead><tr><th>器物</th><th>为什么是把刀</th></tr></thead>
+            <tbody>
+              <tr><td><b>《百官行述》</b></td><td>全剧唯一一件「不看内容、只看在谁手里」的武器。烧掉它等于当众宣布「我不靠这个也能赢」</td></tr>
+              <tr><td><b>密折</b></td><td>把「谁能直达皇帝」变成特权。<b>密折制度 = 皇帝绕开官僚系统，直接购买忠诚</b></td></tr>
+              <tr><td><b>御匾</b></td><td>一块木头加四个字就能逼皇子低头 —— 杀伤力来自「你不能对御笔不敬」这条规矩</td></tr>
+              <tr><td><b>正大光明匾</b></td><td>用「无人能碰」来担保合法性。是对九子夺嫡的正面回答</td></tr>
+              <tr><td><b>大将军印</b></td><td>谁挂上它，谁就握住了最精锐的野战军 —— 所以朝廷上下默认「这个人就是太子人选」</td></tr>
+              <tr class="hi"><td><b>案头的丹药</b></td><td>全剧最后一笔。雍正临死前拿起一颗塞进嘴里，重又提起朱笔 —— 笔又放下了。<b>剧本一句话没解释它是什么</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ 开局 ════════ -->
+    <section class="yz-panel" id="p-kai">
+      <div class="yz-sec"><span class="yz-sec-v">开局</span>
+        <div class="yz-sec-b">
+          <p class="yz-note">填完点「生成开局文书」，复制那段话粘到对话第一条。以后每一轮都以那段为准。</p>
+          <div class="yz-form">
+            <label class="yz-f"><span>名字</span><input id="f-name" type="text" placeholder="你自己取"></label>
+            <label class="yz-f"><span>年纪</span><input id="f-age" type="text" placeholder="如：二十四"></label>
+            <label class="yz-f yz-f-2"><span>身份</span>
+              <select id="f-role">
+                <option value="皇子">皇子 —— 康熙的儿子（你会被卷进夺嫡）</option>
+                <option value="宗室">宗室 —— 远支，没有夺嫡资格，但有活路</option>
+                <option value="臣子">臣子 —— 汉臣或满臣，靠办事往上走</option>
+                <option value="旗下">旗下 —— 包衣 / 旗人，主子的家里人</option>
+                <option value="布衣">布衣 —— 平民，最自由，最没有退路</option>
+              </select>
+            </label>
+            <label class="yz-f yz-f-2"><span>排行（不是皇子就不填）</span>
+              <select id="f-rank">
+                <option value="">—</option>
+                <option>大阿哥</option><option>二阿哥</option><option>三阿哥</option>
+                <option>四阿哥</option><option>八阿哥</option><option>九阿哥</option>
+                <option>十阿哥</option><option>十三阿哥</option><option>十四阿哥</option>
+                <option>其他（写进背景里）</option>
+              </select>
+            </label>
+            <label class="yz-f yz-f-2"><span>身材</span><input id="f-body" type="text" placeholder="如：瘦高，肩窄，走路有点快"></label>
+            <label class="yz-f yz-f-2"><span>相貌</span><input id="f-look" type="text" placeholder="如：眼下有青，看人先看手，不笑"></label>
+            <label class="yz-f yz-f-wide"><span>我从哪一刻开始</span>
+              <select id="f-when">
+                <optgroup label="上 · 康熙朝（第 1–20 集）">
+                  <option>康熙四十六年（1707）· 黄河决口 —— 国库是空的，一切刚开始</option>
+                  <option>康熙四十六年 · 江南筹款 —— 你跟着钦差下扬州，去抢盐商的钱</option>
+                  <option>康熙四十六年 · 江夏镇 —— 那块御匾底下，你低过头</option>
+                  <option>康熙四十七年（1708）· 追比欠款 —— 老臣上吊，满朝恨你</option>
+                  <option>康熙四十七年 · 马国成闹场 —— 他当众撕开衣服给你看伤疤</option>
+                  <option>康熙四十七年 · 魏东亭自尽 —— 皇帝哭了，账记在你头上</option>
+                  <option>康熙四十七年 · 太子改了期限 —— 他做了好人，你背了骂名</option>
+                  <option>康熙四十七年 · 刑部冤狱案 —— 张五哥被押上菜市口</option>
+                  <option>康熙四十七年 · 张廷玉烧折 —— 那把火救了太子</option>
+                  <option>康熙四十七年 · 热河围场 —— 太子和皇妃的事发了</option>
+                  <option>康熙四十七年 · 第一次废太子 —— 大阿哥把自己也废了</option>
+                  <option>康熙四十八年（1709）· 推举新太子 —— 满朝保举八爷</option>
+                  <option>康熙四十八年 · 复立太子 —— 佟国维被亲侄子卖了</option>
+                  <option>康熙四十八年 · 太子监国 —— 他开始清算，你去劝过一次</option>
+                  <option>康熙年间 · 血洗江夏镇 —— 七百多口人，换一张当票</option>
+                  <option>康熙年间 · 当众烧《百官行述》—— 四口大箱子抬进雍王府</option>
+                  <option>康熙五十一年（1712）· 太子二废 —— 十三阿哥被圈，一关十年</option>
+                  <option>康熙五十七年（1718）· 选大将军王 —— 最像储位的那把椅子</option>
+                  <option>康熙六十年（1721）· 死鹰案 —— 一只死鹰换了皇位</option>
+                  <option>康熙六十一年十一月（1722）· 康熙驾崩 —— 遗诏与兵权</option>
+                </optgroup>
+                <optgroup label="下 · 雍正朝（第 21–44 集）">
+                  <option selected>雍正元年（1723）· 新君 —— 封老八当总理王大臣</option>
+                  <option>雍正元年 · 诺敏案 —— 「天下第一巡抚」那块匾</option>
+                  <option>雍正元年 · 藩库破了 —— 不查贪官，查债主</option>
+                  <option>雍正二年（1724）· 恩科泄题 —— 副主考自己摘了顶子</option>
+                  <option>雍正二年 · 菜市口观斩 —— 四品以上都得去看</option>
+                  <option>雍正二年 · 殿试掌灯 —— 皇帝给一个考生举灯</option>
+                  <option>雍正二年 · 刘墨林与苏舜卿 —— 探花不要，要一个妓女</option>
+                  <option>雍正二年 · 去手 —— 十只左手齐刷刷落地</option>
+                  <option>雍正二年 · 卸甲 —— 「他们只知道军令，不知道皇上」</option>
+                  <option>雍正三年（1725）· 新政开推 —— 官绅一体当差</option>
+                  <option>雍正三年 · 孙嘉诚之死 —— 皇帝把人送到别人刀下</option>
+                  <option>雍正三年末 · 年羹尧倒了 —— 满朝一起上的折子</option>
+                  <option>雍正四年（1726）· 乔引娣 —— 景陵的雪人</option>
+                  <option>雍正四年 · 旗人自耕 —— 政策要他们当农民，他们当了地主</option>
+                  <option>雍正年间 · 河南罢考 —— 两份折子，签名一样</option>
+                  <option>雍正八年（1730）· 八王议政 —— 满朝无一人说话</option>
+                  <option>雍正八年 · 胤祥之死 —— 遗言「小心弘时」</option>
+                  <option>雍正十三年（1735）· 含泪杀子 —— 有江山便不该有「我」</option>
+                  <option>雍正十三年 · 曾静案 —— 白饭配汤</option>
+                  <option>雍正十三年八月 · 正大光明 —— 案头那颗丹药</option>
+                </optgroup>
+              </select>
+            </label>
+            <label class="yz-f yz-f-wide"><span>背景 · 以前是干什么的</span>
+              <textarea id="f-bg" rows="4" placeholder="自己写。读圣贤书？带兵？管账？还是什么都没干过、只是有人保你？"></textarea>
+            </label>
+            <div class="yz-bgs">
+              <button type="button" data-bg="ru">儒家学习 · 有清名，不会办事</button>
+              <button type="button" data-bg="wu">带兵打仗 · 有军功，被文官看不起</button>
+              <button type="button" data-bg="shi">管账理财 · 会算钱，人人防着你</button>
+              <button type="button" data-bg="wu2">旗下包衣 · 主子的家里人，没有自己</button>
+            </div>
+            <div class="yz-acts">
+              <button type="button" id="btn-build" class="yz-btn on">生成开局文书</button>
+              <button type="button" id="btn-copy" class="yz-btn">复制</button>
+              <button type="button" id="btn-reset" class="yz-btn">重置</button>
+            </div>
+          </div>
+          <pre class="yz-out" id="yzOut">（填完上面，点「生成开局文书」）</pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="yz-foot">
+    雍正王朝（1999）· 刘和平 / 二月河 编剧 · 胡玫 导演<br>
+    <q>有江山便不该有「我」，有国便不能有家。</q>
+  </footer>
+</div>
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   低照度宫廷 · 一层层压下去的黑，中间几处烛光
+   烛黄只给三样：当前页签 / 章节竖标 / 关键句
+   血红只标「死」和「危险」
+   ⚠ 颜色全部写字面量（引擎会加前缀，:root 够不到）
+   ══════════════════════════════════════════════════════════════ */
+@font-face{font-family:'YzKai';src:url('https://filomenosnyder-stack.github.io/datang-1566/heqin/fonts/heqin-kai.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'YzSong';src:url('https://filomenosnyder-stack.github.io/datang-1566/heqin/fonts/heqin-song.woff2') format('woff2');font-display:swap}
+
+.yz{
+  background:#0B0D10;
+  background-image:
+    radial-gradient(ellipse 120% 70% at 50% -10%, rgba(217,164,65,.055), transparent 60%),
+    radial-gradient(ellipse 90% 60% at 50% 108%, rgba(120,60,20,.05), transparent 60%);
+  color:#C6C0B4;
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  font-size:15px;line-height:1.9;
+  max-width:1080px;margin:0 auto;padding:0 0 70px;
+  position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+.yz *{box-sizing:border-box}
+/* 暗角 —— 让底不是平涂 */
+.yz::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(ellipse 78% 62% at 50% 42%, transparent 42%, rgba(0,0,0,.55) 100%);
+}
+
+/* ══════ 封面 ══════ */
+.yz-cover{position:fixed;inset:0;z-index:99;background:#06070A;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;transition:opacity .85s ease,visibility .85s}
+.yz-cover.gone{opacity:0;visibility:hidden;pointer-events:none}
+.yz-cv-bg{position:absolute;inset:-10%;filter:blur(30px) brightness(.36) saturate(1.15);animation:yzBg 15s ease-out both}
+@keyframes yzBg{from{transform:scale(1.18);opacity:0}to{transform:scale(1);opacity:1}}
+.yz-cv-frame{position:relative;height:84vh;max-height:660px;overflow:hidden;animation:yzPoster 1.6s cubic-bezier(.16,1,.3,1) both}
+@keyframes yzPoster{from{clip-path:inset(0 0 100% 0);transform:scale(1.05)}to{clip-path:inset(0 0 0 0);transform:scale(1)}}
+.yz-cv-frame img{height:100%;width:auto;display:block}
+.yz-cv-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,7,10,.5) 0%,transparent 24%,transparent 52%,rgba(6,7,10,.92) 100%)}
+.yz-cv-in{position:absolute;left:0;right:0;bottom:0;text-align:center;padding:0 20px 52px;opacity:0;animation:yzFade .9s ease both 1.1s;z-index:2}
+@keyframes yzFade{to{opacity:1}}
+.yz-cv-v{color:#8B8F98;font-size:12px;letter-spacing:.42em;text-indent:.42em}
+.yz-cv-go{margin-top:20px;color:#D9A441;font-size:12.5px;letter-spacing:.5em;text-indent:.5em;animation:yzBlink 2.6s ease-in-out infinite}
+@keyframes yzBlink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ══════ 对峙 ══════ */
+.yz-face{padding:56px 22px 34px;position:relative}
+.yz-face-hd{text-align:center;margin-bottom:34px}
+.yz-face-h1{display:block;font-family:'YzSong',serif;font-size:clamp(24px,4.4vw,34px);color:#E8E2D6;letter-spacing:.3em;text-indent:.3em}
+.yz-face-h2{display:block;margin-top:10px;color:#6E727B;font-size:12.5px;letter-spacing:.5em;text-indent:.5em}
+
+/* ⚠⚠ 左右两块，永远并排 —— 任何宽度都不折成上下 */
+.yz-face-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.yz-fs{opacity:0;cursor:pointer}
+.yz-fs[data-side="win"]{animation:yzInL .9s cubic-bezier(.16,.9,.25,1) .15s both}
+.yz-fs[data-side="lose"]{animation:yzInR .9s cubic-bezier(.16,.9,.25,1) .15s both}
+@keyframes yzInL{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes yzInR{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+
+/* 舞台：照片在上，视频藏在下面；点了才翻出来 */
+.yz-stage{position:relative;background:#000;aspect-ratio:4/3;overflow:hidden;box-shadow:0 0 0 1px #242A32, 0 18px 44px rgba(0,0,0,.7)}
+.yz-stage img,.yz-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.yz-photo{z-index:3;filter:contrast(1.06) saturate(.95) brightness(1.02);transition:opacity .5s ease,transform .6s ease}
+.yz-fs:hover .yz-photo{transform:scale(1.035)}
+.yz-stage video{z-index:2}
+/* 八贤王那半边压一点冷调 —— 只差一点点，不做一眼假的滤镜 */
+.yz-fs[data-side="lose"] .yz-stage video{filter:contrast(1.1) saturate(.74) brightness(.9)}
+.yz-fs[data-side="lose"] .yz-photo{filter:contrast(1.1) saturate(.74) brightness(.9)}
+
+/* 播放标记 */
+.yz-play{
+  position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:62px;height:62px;line-height:60px;text-align:center;font-size:20px;color:#E8E2D6;
+  border:1px solid rgba(232,226,214,.55);border-radius:50%;
+  background:rgba(8,10,13,.42);backdrop-filter:blur(3px);
+  transition:opacity .35s ease,transform .35s ease;pointer-events:none;
+}
+.yz-fs:hover .yz-play{transform:translate(-50%,-50%) scale(1.1);border-color:#D9A441;color:#D9A441}
+.yz-fs.playing .yz-photo{opacity:0}
+.yz-fs.playing .yz-play{opacity:0}
+.yz-fs.playing .yz-stage{box-shadow:0 0 0 1px #3A3020, 0 22px 54px rgba(0,0,0,.8)}
+
+.yz-fs-name{font-family:'YzSong',serif;font-size:19px;margin-top:15px;letter-spacing:.1em;color:#E8E2D6}
+.yz-fs-src{font-size:11.5px;color:#5A5E66;margin-top:4px;letter-spacing:.04em}
+.yz-fs.playing .yz-fs-name{color:#D9A441}
+
+/* 面对面的两句 —— 左句右对齐冲中线，右句左对齐冲中线 */
+.yz-face-dlg{display:grid;grid-template-columns:1fr 18px 1fr;margin-top:26px;align-items:start}
+.yz-dl-l{text-align:right}
+.yz-dl-r{text-align:left}
+.yz-dl p{font-family:'YzKai',serif;font-size:15px;line-height:1.95;color:#B4AEA2;margin:0}
+.yz-dl-l p{color:#D2C4A4}
+.yz-dl-r p{color:#9FAEBE}
+.yz-dl span{display:block;margin-top:8px;font-size:11.5px;color:#5A5E66}
+.yz-face-seam2{justify-self:center;width:1px;height:100%;min-height:60px;background:linear-gradient(180deg,transparent,#3A3F49,transparent)}
+
+.yz-face-end{margin-top:32px;text-align:center;font-family:'YzKai',serif;font-size:16.5px;line-height:2.05;color:#C6C0B4;padding:24px 10px 0;border-top:1px solid #1E2229}
+.yz-face-end b{color:#D9A441}
+
+/* ══════ 标题 ══════ */
+.yz-hero{text-align:center;padding:52px 20px 30px;border-bottom:1px solid #1E2229}
+.yz-hero h1{font-family:'YzSong',serif;font-size:clamp(26px,4.6vw,40px);color:#E8E2D6;font-weight:400;letter-spacing:.26em;text-indent:.26em;margin:0}
+.yz-hero h1 em{font-style:normal;color:#D9A441}
+.yz-hero-sub{margin-top:13px;color:#4E525A;font-size:12px}
+.yz-hero-line{margin-top:20px;color:#8B8F98;font-family:'YzKai',serif;font-size:15px;line-height:2}
+
+/* ══════ 页签 ══════ */
+.yz-nav{display:flex;flex-wrap:wrap;gap:0;justify-content:center;padding:0 16px;border-bottom:1px solid #1E2229;position:sticky;top:0;background:rgba(11,13,16,.96);backdrop-filter:blur(10px);z-index:20}
+.yz:not(.js) .yz-nav{display:none}
+.yz-tab{background:transparent;border:0;border-bottom:2px solid transparent;color:#6E727B;padding:15px 22px 13px;font-size:14.5px;cursor:pointer;font-family:inherit;letter-spacing:.2em;text-indent:.2em;transition:all .22s}
+.yz-tab:hover{color:#B4AEA2}
+.yz-tab.on{color:#D9A441;border-bottom-color:#D9A441}
+
+/* ⚠ 面板默认展开 —— 脚本死了也不白屏；绑完才加 .js 收 */
+.yz-panel{display:block;padding:8px 0 0;animation:yzP .4s ease both}
+.yz.js .yz-panel{display:none}
+.yz.js .yz-panel.on{display:block}
+@keyframes yzP{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ══ 章节：左边一根竖标签 ══ */
+.yz-sec{display:grid;grid-template-columns:64px 1fr;gap:0;padding:34px 22px 0;align-items:start}
+.yz-sec-v{
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:'YzSong',serif;font-size:15px;letter-spacing:.34em;
+  color:#D9A441;padding-top:2px;justify-self:center;
+  border-right:1px solid #1E2229;padding-right:14px;margin-right:14px;min-height:52px;
+}
+.yz-sec-b{min-width:0}
+
+.yz-lead{font-size:16px;color:#D2CCC0;line-height:2.05;margin:0}
+.yz-note{color:#6E727B;font-size:13px;margin:0 0 16px}
+.yz-cf{color:#B4AEA2;font-size:13px;margin:14px 0 0;padding-left:12px;border-left:1px solid #3A3F49}
+
+.yz-warn{margin:18px 0 0;padding:14px 16px;font-size:13.5px;color:#B4AEA2;background:rgba(155,38,32,.08);border-left:2px solid #9B2620}
+.yz-warn b{color:#C0392B}
+
+/* 六条理 —— 界格，不是盒子 */
+.yz-li{padding:20px 0 18px;border-top:1px solid #1E2229}
+.yz-li:first-of-type{border-top:0}
+.yz-li h3{font-family:'YzSong',serif;font-size:16.5px;color:#E8E2D6;font-weight:400;letter-spacing:.05em;margin:0 0 10px}
+.yz-li p{margin:8px 0;font-size:14.5px;color:#B4AEA2}
+.yz-li .yz-eg{color:#6E727B;font-size:13.5px;padding-left:14px;border-left:1px solid #2A2F37}
+.yz-li .yz-use{color:#8B8F98;font-size:13px;margin-top:12px;padding-left:14px;border-left:2px solid #D9A441}
+.yz-li .yz-use b{color:#D9A441;margin-right:8px;letter-spacing:.1em}
+.yz-li p b{color:#E8E2D6}
+
+.yz-coda{margin:42px 22px 0;padding:26px 22px;text-align:center;font-family:'YzKai',serif;font-size:15.5px;line-height:2.15;color:#B4AEA2;border-top:1px solid #1E2229;border-bottom:1px solid #1E2229}
+.yz-coda b{color:#D9A441}
+
+/* ══ 表格 ══
+   ⚠⚠ 这个引擎对表格硬套 color:black，不继承父级
+   实测：父元素 color:rgb(1,2,3)，同级 <dd> 继承到，表格和单元格一律算成 rgb(0,0,0)
+   表现就是「加粗的白、斜体的红、正文全黑」—— 黑底黑字，一个字看不见
+   ⚠ 所以 table / th / td 三级全部写死颜色 */
+.yz-tw{width:100%;border-collapse:collapse;font-size:13.8px;color:#B4AEA2;margin:0}
+.yz-tw th,.yz-tw td{padding:12px 12px;border-bottom:1px solid #1E2229;text-align:left;vertical-align:top;color:#B4AEA2}
+.yz-tw thead th{color:#8B8F98;background:transparent;font-weight:400;font-size:12px;letter-spacing:.16em;border-bottom:1px solid #2A2F37;white-space:nowrap}
+.yz-tw td b,.yz-tw th b{color:#E8E2D6;font-weight:600}
+.yz-tw tr.hi td{color:#B4AEA2}
+.yz-tw tr.hi td b{color:#C0392B}
+.yz-tw tr.hi td::before{content:'';display:none}
+
+/* 幕 */
+.yz-mu{border-bottom:1px solid #1A1E24;padding:12px 2px;display:flex;gap:16px;align-items:baseline;cursor:pointer;transition:background .18s}
+.yz-mu:hover{background:rgba(217,164,65,.03)}
+.yz-mu-n{font-family:'YzSong',serif;color:#4E525A;font-size:13.5px;min-width:3em;flex:none;letter-spacing:.04em}
+.yz-mu-b{flex:1;min-width:0}
+.yz-mu-t{color:#B4AEA2;font-size:14.5px}
+.yz-mu-e{color:#4E525A;font-size:11.5px;margin-left:10px}
+.yz-mu-hk{color:#D9A441;font-size:13px;margin-top:6px;display:none;font-family:'YzKai',serif}
+.yz-mu.open .yz-mu-hk{display:block}
+.yz-mu.open .yz-mu-t{color:#E8E2D6}
+
+/* 人物墙 —— 放大 */
+.yz-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:14px}
+.yz-p{cursor:pointer;transition:transform .25s}
+.yz-p:hover{transform:translateY(-4px)}
+.yz-p img{width:100%;display:block;aspect-ratio:1;object-fit:cover;filter:contrast(1.06) saturate(.94) brightness(.97);box-shadow:0 0 0 1px #1E2229,0 12px 30px rgba(0,0,0,.6);transition:box-shadow .25s}
+.yz-p:hover img{box-shadow:0 0 0 1px #D9A441,0 16px 40px rgba(0,0,0,.75)}
+.yz-p-n{padding:11px 2px 0}
+.yz-p-n b{color:#E8E2D6;font-size:14.5px;font-weight:600;display:block;font-family:'YzSong',serif;letter-spacing:.06em}
+.yz-p-n i{font-style:normal;color:#D9A441;font-size:11.5px;display:block;margin-top:3px;letter-spacing:.08em}
+.yz-p-n em{font-style:normal;color:#6E727B;font-size:12px;display:block;margin-top:6px;line-height:1.6}
+.yz-p-camp{display:none}
+
+/* 年表 —— 三栏：年 | 集 | 事 */
+.yz-tl{border-left:1px solid #23282F;margin-left:5px}
+.yz-tl-r{
+  display:grid;grid-template-columns:100px 44px 1fr;gap:11px;align-items:baseline;
+  padding:10px 0 10px 17px;position:relative;font-size:13.5px;color:#6E727B;
+  border-bottom:1px solid rgba(30,34,41,.5);
+}
+.yz-tl-r::before{content:'';position:absolute;left:-3px;top:15px;width:5px;height:5px;border-radius:50%;background:#23282F}
+.yz-tl-r span{color:#8B8F98;font-size:11.5px;line-height:1.42;letter-spacing:.02em}
+.yz-tl-r i{font-style:normal;color:#4E525A;font-size:11.5px;text-align:right;letter-spacing:.04em;white-space:nowrap}
+.yz-tl-r.hi{color:#C6C0B4}
+.yz-tl-r.hi::before{background:#9B2620;box-shadow:0 0 8px rgba(155,38,32,.75)}
+.yz-tl-r.hi b{color:#E8E2D6}
+.yz-tl-r.hi i{color:#A8863A}
+
+/* 表单 */
+.yz-form{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px}
+.yz-f{display:flex;flex-direction:column;gap:7px}
+.yz-f span{font-size:12px;color:#8B8F98;letter-spacing:.1em}
+.yz-f input,.yz-f select,.yz-f textarea{background:#0E1115;border:1px solid #23282F;border-bottom:1px solid #333A43;color:#E8E2D6;padding:10px 12px;font-size:14px;border-radius:0;font-family:inherit;outline:none;transition:border-color .2s}
+.yz-f input:focus,.yz-f select:focus,.yz-f textarea:focus{border-bottom-color:#D9A441}
+.yz-f textarea{resize:vertical;line-height:1.75}
+.yz-f-2{grid-column:span 2}
+.yz-f-wide{grid-column:span 4}
+.yz-bgs{grid-column:span 4;display:flex;flex-wrap:wrap;gap:8px}
+.yz-bgs button{background:transparent;border:1px solid #23282F;color:#6E727B;padding:8px 14px;font-size:12.5px;border-radius:0;cursor:pointer;font-family:inherit;transition:all .2s}
+.yz-bgs button:hover{border-color:#8B6A2A;color:#D9A441}
+.yz-bgs button.on{border-color:#D9A441;color:#D9A441;background:rgba(217,164,65,.07)}
+.yz-acts{grid-column:span 4;display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.yz-btn{background:transparent;border:1px solid #3A3F49;color:#B4AEA2;padding:11px 28px;font-size:14px;border-radius:0;cursor:pointer;font-family:inherit;letter-spacing:.14em;transition:all .2s}
+.yz-btn:hover{border-color:#D9A441;color:#D9A441}
+.yz-btn.on{background:#D9A441;border-color:#D9A441;color:#0B0D10;font-weight:600}
+.yz-out{margin-top:22px;background:#0E1115;border-left:2px solid #D9A441;padding:20px 22px;font-size:13.5px;line-height:2;color:#C6C0B4;white-space:pre-wrap;word-break:break-word;font-family:'YzKai',ui-monospace,monospace;max-height:520px;overflow:auto}
+@media(max-width:860px){.yz-form{grid-template-columns:repeat(2,1fr)}.yz-f-wide,.yz-bgs,.yz-acts{grid-column:span 2}}
+
+.yz-foot{text-align:center;padding:48px 20px 0;margin-top:48px;border-top:1px solid #1E2229;color:#4E525A;font-size:12px;line-height:2.1}
+.yz-foot q{color:#8B8F98;font-family:'YzKai',serif;font-size:14px;quotes:none}
+
+@media(max-width:720px){
+  .yz-sec{grid-template-columns:44px 1fr;padding:28px 16px 0}
+  .yz-sec-v{font-size:13px;padding-right:10px;margin-right:10px}
+  /* ⚠ 对峙段【不折】—— 两个视频永远左右并排 */
+  .yz-face{padding:38px 14px 26px}
+  .yz-face-row{gap:10px}
+  .yz-face-dlg{grid-template-columns:1fr 10px 1fr;margin-top:20px}
+  .yz-fs-name{font-size:15px;margin-top:11px}
+  .yz-fs-src{font-size:10.5px}
+  .yz-play{width:44px;height:44px;line-height:42px;font-size:15px}
+  .yz-people{grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:11px}
+  .yz-cv-frame{height:66vh}
+  .yz-tl-r{grid-template-columns:74px 40px 1fr;gap:8px;padding-left:13px;font-size:12.5px}
+  .yz-tl-r span,.yz-tl-r i{font-size:10.5px}
+}
+/* ⚠ 极窄屏（<560）三栏会挤成一行一个字 → 改成一行流式 */
+@media(max-width:560px){
+  .yz-tl-r{display:block;padding-left:13px;font-size:12.5px}
+  .yz-tl-r span{display:inline;font-size:10.5px}
+  .yz-tl-r i{display:inline;text-align:left;margin-left:7px;font-size:10.5px}
+  .yz-tl-r i::after{content:'｜';margin-left:7px;color:#333A43}
+  .yz-tl-r span br{display:none}
+  .yz-sec{grid-template-columns:1fr;padding:26px 14px 0}
+  .yz-sec-v{writing-mode:horizontal-tb;border-right:0;border-bottom:1px solid #1E2229;
+            padding:0 0 9px;margin:0 0 16px;justify-self:start;letter-spacing:.3em}
+}
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ⚠⚠ 双模式资源
+     ASSET_BASE 空  → 本地：图片 ../chars/、视频 assets/（file:// 直接预览）
+     ASSET_BASE 有值 → Pages 绝对地址（发卡用）
+     build 会替换下面这行的 ""，不要手改 */
+  var ASSET_BASE = "https://filomenosnyder-stack.github.io/yongzheng-wangchao/"; /* BUILD:ASSET_BASE */
+
+  function photoURL(f) { return ASSET_BASE ? ASSET_BASE + "chars/" + f : "../chars/" + f; }
+  function videoURL(f) { return ASSET_BASE ? ASSET_BASE + "video/" + f : "assets/" + f; }
+  var CHARS = ASSET_BASE ? ASSET_BASE + "chars/" : "../chars/";
+
+  var MUS = [
+    [1,'1','黄河决口','国库是空的'],[2,'1-2','江南筹款','钦差是去抢钱的'],
+    [3,'2-3','江夏镇的御匾','一块匾就能压死皇子'],[4,'3-4','追比欠款','康熙要的是一个孤臣'],
+    [5,'4','马国成闹场','当众脱衣给你看'],[6,'5','魏东亭自尽','忠臣被逼死，皇帝哭了'],
+    [7,'6','太子改了期限','太子把自己卖了'],[8,'7','张五哥顶罪','刑部的水有多深'],
+    [9,'8','张廷玉烧折','一把火烧掉太子'],[10,'9','热河鹿场','太子和皇妃'],
+    [11,'10','第一次废太子','大阿哥把自己也废了'],[12,'11','推举新太子','争是不争，不争是争'],
+    [13,'12','佟国维被侄子卖了','保举废太子才是安全牌'],[14,'13','太子监国','复位之后疯狂报复'],
+    [15,'14','血洗江夏镇','七百口人换一张当票'],[16,'15','当众烧百官行述','四口大箱子抬进雍王府'],
+    [17,'16-17','高福被套 · 十三被圈','烧掉的把柄，还是一样值钱'],
+    [18,'18','大将军王','最像储位的那把椅子'],[19,'19','死鹰','一只死鹰换了皇位'],
+    [20,'20','康熙驾崩','传位于四子'],
+    [21,'21','新君','椅子换人了，人没换'],[22,'22-23','诺敏案 · 假账','天下第一巡抚'],
+    [23,'24','诺敏案 · 破','不查贪官，查债主'],[24,'25','恩科泄题','副主考自己摘了顶子'],
+    [25,'26','菜市口观斩','皇上下了罪己诏'],[26,'27','殿试掌灯','皇帝给考生掌灯'],
+    [27,'28','刘墨林与苏舜卿','探花不要，要一个妓女'],[28,'29-30','去手','十只左手齐刷刷落地'],
+    [29,'31','卸甲','只知有军令，不知有皇上'],[30,'32','新政开推','拿出点雷霆手段'],
+    [31,'33','杀孙嘉诚','把人送到别人刀下'],[32,'34-35','年羹尧倒了','满朝一起上的折子'],
+    [33,'36','乔引娣','朕不让你死，还要你服侍朕'],[34,'37','旗人自耕','政策要他们当农民，他们当了地主'],
+    [35,'38-39','河南罢考 → 菜市口','两份折子，签名一样'],[36,'40','八王议政 · 上','满朝无一人说话'],
+    [37,'41','八王议政 · 下','你赢在你是皇上'],[38,'42','胤祥之死','提防弘时'],
+    [39,'43','含泪杀子','比老八更狠的是我儿子'],[40,'43-44','曾静案 · 大义觉迷','白饭配汤'],
+    [41,'44','正大光明 · 暴卒','双方都不是赢家']
+  ];
+
+  var PEOPLE = [
+    ['qiangxi','康熙','圣祖','皇族','在位六十一年，全剧唯一从头清醒到尾的人','他怕的不是儿子不成器，是儿子在他死之前就动手'],
+    ['yinti','胤禔','大阿哥','皇族','第一个跳出来要杀太子的，也是第一个被圈的','他要名分 —— 结果革爵圈禁'],
+    ['yinreng','胤礽','二阿哥','皇族','当了近四十年太子，等了四十年','他要时间 —— 结果永远圈禁'],
+    ['yinzhi','胤祉','三阿哥','皇族','编书的人，不争不抢','不争的人也不安全 —— 雍正朝被派去抄兄弟的家'],
+    ['yongzheng','雍正','四阿哥','皇族','冷面王。上半部唯一没表态的那个人','他要办成事 —— 死在奏折堆里'],
+    ['yinsi','胤禩','八阿哥','皇族','贤名满天下，满朝保举 —— 所以他出局','他要认可 —— 被改名叫「阿其那」'],
+    ['yintang','胤禟','九阿哥','皇族','八爷党的钱袋子','跟着八哥 —— 改名「塞思黑」，死在圈禁中'],
+    ['yine','胤䄉','十阿哥','皇族','当街变卖家当被田文镜制止，反把田打了','跟着八哥 —— 抄家圈禁'],
+    ['yinxiang','胤祥','十三阿哥','皇族','拼命十三郎，被圈十年，出来变成谨小慎微的人','他要世道有人管 —— 累死，唯一死得及时的人'],
+    ['yinti2','胤禵','十四阿哥','皇族','大将军王。同母弟，却是死对头','他要赢 —— 被软禁、守陵，活到乾隆朝'],
+    ['hongshi','弘时','三子','皇族','恩科泄题的主使，张廷璐替他顶了罪','被胤禩拉拢 —— 赐自尽（含泪杀子）'],
+    ['hongli','弘历','四子','皇族','告发亲哥，赢了，也脏了','后来是乾隆。一登基就禁了《大义觉迷录》'],
+    ['wuya','乌雅氏','德妃','后宫','两个亲生儿子是死对头，她夹在中间一辈子','雍正当众搬椅子扶她坐下，封圣母皇太后'],
+    ['qiaoyindi','乔引娣','—','后宫','胤禵在山西破庙救活的人 → 被雍正留在身边','雍正抢的不是女人，是「我也有份」'],
+    ['zhengchunhua','郑春华','—','后宫','康熙的嫔妃，与太子私通 —— 太子被废的引线','太子让胤祥杀她灭口，胤祥暗中保下了她'],
+    ['nianqiuyue','年秋月','—','后宫','年羹尧的妹妹。「卸甲」那一幕的收尾','雍正被年羹尧打了脸，回宫拿她撒气'],
+    ['sushunqing','苏舜卿','—','后宫','漱玉院。拿出全部积蓄替刘墨林赎身','刘墨林死在扬州后，她投湖殉情'],
+    ['wusidao','邬思道','—','臣子','雍王府西席，瘸腿谋士。「争是不争，不争是争」','什么都知道 —— 所以他主动「半隐」，一辈子不出来做官'],
+    ['zhangtingyu','张廷玉','—','臣子','三朝元老。烧过折子，杀过弟弟，八王议政时一个人站出来','他保的从来不是人，是「这个朝廷还讲不讲道理」'],
+    ['tongguowei','佟国维','—','臣子','上书房首席，替八爷串联举荐','被侄子隆科多卖了个干净，一夜革去一切职务'],
+    ['longkeduo','隆科多','—','臣子','九门提督。宣遗诏的那个人','拥立之功就是催命符 —— 圈禁，在马房装疯保命'],
+    ['niangengyao','年羹尧','—','臣子','抚远大将军。「他们只知道军令，不知道皇上」','到死都穿着黄马褂 —— 他真的以为那件衣服算数'],
+    ['tianwenjing','田文镜','—','臣子','监生出身（捐来的），被革过职 —— 士绅瞧不起他，正因如此他才敢动士绅','河南全省恨他，朝中一半人恨他，背后只有一个皇帝'],
+    ['liwei','李卫','—','臣子','包衣奴才，要饭出身。叫雍正「主子」不叫「皇上」','同样推新政，田文镜被全天下恨，他办成了还落个好名声'],
+    ['lifu','李绂','—','臣子','清流领袖。摘了顶子走出考场去抓舞弊','他领头上了「请罢田文镜疏」—— 判死罪，押到菜市口，弘历求情才赦'],
+    ['sunjiacheng','孙嘉诚','—','臣子','左都御史。跪在午门外求过雨的那个人','雍正把他送去西北，让年羹尧杀 —— 他明知是死还是去了'],
+    ['liumolin','刘墨林','—','臣子','恩科探花。宁要美人不要仕途','死在扬州，替弘历挡了刀'],
+    ['nuomin','诺敏','—','臣子','山西巡抚，赐「天下第一巡抚」匾','他没改账，他改了「实」—— 借银号的银子填藩库']
+  ];
+
+  function $(id, root) { return (root || document).querySelector('#' + id); }
+
+  function init(scope) {
+    if (scope.getAttribute('data-yz-init')) return;
+    scope.setAttribute('data-yz-init', '1');
+    var root = scope;
+
+    /* ── 资源绑定：图片走 data-photo，视频走 data-video ── */
+    var photos = root.querySelectorAll('img[data-photo]');
+    for (var pi = 0; pi < photos.length; pi++) {
+      photos[pi].setAttribute('src', photoURL(photos[pi].getAttribute('data-photo')));
+    }
+    var cvbg = root.querySelector('.yz-cv-bg');
+    if (cvbg) cvbg.style.backgroundImage = "url('" + photoURL('poster.jpg') + "')";
+
+    var vids = root.querySelectorAll('video[data-video]');
+    for (var vi = 0; vi < vids.length; vi++) {
+      vids[vi].setAttribute('src', videoURL(vids[vi].getAttribute('data-video')));
+    }
+
+    /* ── 封面 ── */
+    var cover = $('yzCover', root) || document.getElementById('yzCover');
+    function enter() {
+      if (!cover || cover.classList.contains('gone')) return;
+      cover.classList.add('gone');
+      setTimeout(function () { cover.style.display = 'none'; }, 880);
+    }
+    if (cover) {
+      cover.addEventListener('click', enter);
+      cover.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); }
+      });
+    }
+
+    /* ── 两个视频：平时显示照片，点哪张哪张播；再点一下停 ── */
+    var stages = root.querySelectorAll('.yz-fs');
+    for (var si = 0; si < stages.length; si++) {
+      (function (fs) {
+        fs.addEventListener('click', function () {
+          var on = !fs.classList.contains('playing');
+          var v = fs.querySelector('video');
+          fs.classList.toggle('playing', on);
+          if (!v) return;
+          if (on) {
+            try { v.muted = false; v.volume = 1; } catch (e) {}
+            try { var p = v.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+          } else {
+            try { v.pause(); } catch (e) {}
+          }
+        });
+      })(stages[si]);
+    }
+
+    /* ── 页签 ── */
+    var tabs = root.querySelectorAll('.yz-tab');
+    var panels = root.querySelectorAll('.yz-panel');
+    function go(id) {
+      for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('data-go') === id);
+      for (var j = 0; j < panels.length; j++) panels[j].classList.toggle('on', panels[j].id === id);
+    }
+    for (var t = 0; t < tabs.length; t++) {
+      (function (btn) { btn.addEventListener('click', function () { go(btn.getAttribute('data-go')); }); })(tabs[t]);
+    }
+
+    /* ── 幕表 ── */
+    var box = $('yzMus', root);
+    if (box && !box.getAttribute('data-built')) {
+      box.setAttribute('data-built', '1');
+      var h = '', m, r;
+      for (m = 0; m < MUS.length; m++) {
+        r = MUS[m];
+        h += '<div class="yz-mu"><div class="yz-mu-n">幕' + (r[0] < 10 ? '0' : '') + r[0] + '</div>' +
+             '<div class="yz-mu-b"><div class="yz-mu-t">' + r[2] +
+             '<span class="yz-mu-e">第' + r[1] + '集</span></div>' +
+             '<div class="yz-mu-hk">' + r[3] + '</div></div></div>';
+      }
+      box.innerHTML = h;
+      box.addEventListener('click', function (e) {
+        var el = e.target;
+        while (el && el !== box && !el.classList.contains('yz-mu')) el = el.parentNode;
+        if (el && el !== box) el.classList.toggle('open');
+      });
+    }
+
+    /* ── 人物墙 ── */
+    var pw = $('yzPeople', root);
+    if (pw && !pw.getAttribute('data-built')) {
+      pw.setAttribute('data-built', '1');
+      var ph = '', p, q;
+      for (p = 0; p < PEOPLE.length; p++) {
+        q = PEOPLE[p];
+        ph += '<div class="yz-p" data-py="' + q[0] + '">' +
+                '<img src="' + CHARS + q[0] + '.jpg" alt="' + q[1] + '" loading="lazy">' +
+                '<div class="yz-p-n"><b>' + q[1] + '</b>' +
+                  (q[2] && q[2] !== '—' ? '<i>' + q[2] + '</i>' : '') +
+                  '<em>' + q[4] + '</em></div></div>';
+      }
+      pw.innerHTML = ph;
+      pw.addEventListener('click', function (e) {
+        var el = e.target;
+        while (el && el !== pw && !el.classList.contains('yz-p')) el = el.parentNode;
+        if (!el || el === pw) return;
+        var py = el.getAttribute('data-py'), z;
+        for (z = 0; z < PEOPLE.length; z++) {
+          if (PEOPLE[z][0] === py) { var em = el.querySelector('em'); if (em) em.textContent = PEOPLE[z][5]; break; }
+        }
+      });
+    }
+
+    /* ── 开局表单 ── */
+    var BG = {
+      ru:  '自幼读圣贤书。科举正途出身，有一份清名，士林里说得上话。\n但是——真正办起事来，我不会。我只会讲道理，而道理在这朝廷里不值钱。',
+      wu:  '行伍出身。身上有伤，也有军功。\n文官看不起我，说我粗。而我知道一件事：真到了要死人的时候，只有我这种人有用。',
+      shi: '管过账。天下州县的钱粮怎么走、哪一笔会在哪儿断，我一眼看得出来。\n所以人人都防着我——因为我能看穿他们。',
+      wu2: '旗下包衣。我家世世代代是主子的家里人。\n我没有自己的姓，没有自己的前程，我的一切都是主子给的。所以我比谁都忠心，也比谁都容易死。'
+    };
+    function field(id) { var e = $(id, root); return e ? (e.value || '').trim() : ''; }
+
+    function build() {
+      var nm = field('f-name') || '（未具名）';
+      var role = field('f-role'), age = field('f-age'), rank = field('f-rank');
+      var body = field('f-body'), look = field('f-look');
+      var when = field('f-when'), bg = field('f-bg');
+      var L = [];
+      L.push('【雍正王朝 · 开局】', '');
+      L.push('我是' + nm + '。');
+      L.push('身份：' + role + (rank && rank.indexOf('其他') !== 0 ? ' · ' + rank : ''));
+      if (age) L.push('年纪：' + age);
+      if (body || look) L.push('形貌：' + [body, look].filter(Boolean).join('；'));
+      L.push('', '我从这里开始：' + when, '');
+      if (bg) L.push('我从前是干什么的：', bg, '');
+      L.push('开局第一轮要给我：');
+      L.push('① 我睁眼看到的第一样东西（一样就够，别铺陈）');
+      L.push('② 边上正在发生的、跟我有关的一件事');
+      L.push('③ 一个必须现在回答的问题');
+      L.push('', '三条规矩：');
+      L.push('· 上面写的东西压过一切设定。我没写的人，不许出现。');
+      L.push('· 不要回头写开局。已经发生过的，写在记忆区就够了。');
+      L.push('· 我还没说话的时候，不要替我说话。');
+      var out = $('yzOut', root);
+      if (out) out.textContent = L.join('\n');
+    }
+
+    var bb = $('btn-build', root); if (bb) bb.addEventListener('click', build);
+
+    function fallback(txt, cb) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); cb();
+      } catch (e) {}
+    }
+    var bc = $('btn-copy', root);
+    if (bc) bc.addEventListener('click', function () {
+      var out = $('yzOut', root); if (!out) return;
+      var txt = out.textContent;
+      function done() { bc.textContent = '已复制'; setTimeout(function () { bc.textContent = '复制'; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, function () { fallback(txt, done); });
+      } else fallback(txt, done);
+    });
+
+    var br = $('btn-reset', root);
+    if (br) br.addEventListener('click', function () {
+      ['f-name', 'f-age', 'f-body', 'f-look', 'f-bg'].forEach(function (id) { var e = $(id, root); if (e) e.value = ''; });
+      ['f-role', 'f-rank', 'f-when'].forEach(function (id) { var e = $(id, root); if (e) e.selectedIndex = 0; });
+      var out = $('yzOut', root); if (out) out.textContent = '（填完上面，点「生成开局文书」）';
+      var bs = root.querySelectorAll('.yz-bgs button');
+      for (var k = 0; k < bs.length; k++) bs[k].classList.remove('on');
+    });
+
+    var bgBtns = root.querySelectorAll('.yz-bgs button');
+    for (var b = 0; b < bgBtns.length; b++) {
+      (function (btn) {
+        btn.addEventListener('click', function () {
+          var ta = $('f-bg', root), key = btn.getAttribute('data-bg');
+          if (ta && BG[key]) {
+            ta.value = BG[key];
+            for (var k = 0; k < bgBtns.length; k++) bgBtns[k].classList.remove('on');
+            btn.classList.add('on');
+          }
+        });
+      })(bgBtns[b]);
+    }
+
+    /* ⚠ 绑完【才】加 .js —— 之前面板是展开的，脚本死了也不白屏 */
+    root.classList.add('js');
+  }
+
+  function boot() {
+    var roots = document.querySelectorAll('.yz');
+    if (roots.length) {
+      for (var i = 0; i < roots.length; i++) {
+        try { init(roots[i]); }
+        catch (e) { if (window.console && console.error) console.error('[雍正] 前端初始化失败', e); }
+      }
+    } else {
+      try { init(document.body); document.documentElement.classList.add('yz-js'); }
+      catch (e) { if (window.console && console.error) console.error('[雍正] 前端初始化失败', e); }
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>

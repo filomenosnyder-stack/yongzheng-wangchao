@@ -1,0 +1,254 @@
+[
+  {
+    "zh": "康熙",
+    "py": "qiangxi",
+    "camp": "皇族",
+    "desc": "圣祖 · 在位六十一年",
+    "img": "chars/qiangxi.jpg",
+    "src": "2528289814.jpg",
+    "rank": "康熙 · 圣祖"
+  },
+  {
+    "zh": "雍正",
+    "py": "yongzheng",
+    "camp": "皇族",
+    "desc": "世宗 · 冷面王",
+    "img": "chars/yongzheng.jpg",
+    "src": "用户提供 OIP.jpg",
+    "rank": "四阿哥"
+  },
+  {
+    "zh": "胤礽",
+    "py": "yinreng",
+    "camp": "皇族",
+    "desc": "二阿哥 · 太子",
+    "img": "chars/yinreng.jpg",
+    "src": "2528268010.jpg",
+    "rank": "二阿哥"
+  },
+  {
+    "zh": "胤禔",
+    "py": "yinti",
+    "camp": "皇族",
+    "desc": "直郡王 · 大阿哥",
+    "img": "chars/yinti.jpg",
+    "src": "用户提供 OIP (1).jpg",
+    "rank": "大阿哥"
+  },
+  {
+    "zh": "胤祉",
+    "py": "yinzhi",
+    "camp": "皇族",
+    "desc": "三阿哥 · 诚亲王",
+    "img": "chars/yinzhi.jpg",
+    "src": "2528267802.jpg",
+    "rank": "三阿哥"
+  },
+  {
+    "zh": "胤禩",
+    "py": "yinsi",
+    "camp": "皇族",
+    "desc": "廉亲王 · 八贤王",
+    "img": "chars/yinsi.jpg",
+    "src": "用户提供 OIP (3).webp",
+    "rank": "八阿哥"
+  },
+  {
+    "zh": "胤禟",
+    "py": "yintang",
+    "camp": "皇族",
+    "desc": "九阿哥 · 塞思黑",
+    "img": "chars/yintang.jpg",
+    "src": "2528267036.jpg",
+    "rank": "九阿哥"
+  },
+  {
+    "zh": "胤䄉",
+    "py": "yine",
+    "camp": "皇族",
+    "desc": "十阿哥 · 敦郡王",
+    "img": "chars/yine.jpg",
+    "src": "2528267034.jpg",
+    "rank": "十阿哥"
+  },
+  {
+    "zh": "胤祥",
+    "py": "yinxiang",
+    "camp": "皇族",
+    "desc": "十三阿哥 · 怡亲王",
+    "img": "chars/yinxiang.jpg",
+    "src": "2528266717.jpg",
+    "rank": "十三阿哥"
+  },
+  {
+    "zh": "胤禵",
+    "py": "yinti2",
+    "camp": "皇族",
+    "desc": "十四阿哥 · 大将军王",
+    "img": "chars/yinti2.jpg",
+    "src": "2528299366.jpg",
+    "rank": "十四阿哥"
+  },
+  {
+    "zh": "弘时",
+    "py": "hongshi",
+    "camp": "皇族",
+    "desc": "雍正第三子",
+    "img": "chars/hongshi.jpg",
+    "src": "2528376035.jpg",
+    "rank": "三子"
+  },
+  {
+    "zh": "弘历",
+    "py": "hongli",
+    "camp": "皇族",
+    "desc": "雍正第四子 → 乾隆",
+    "img": "chars/hongli.jpg",
+    "src": "2528393946.jpg",
+    "rank": "四子"
+  },
+  {
+    "zh": "乌雅氏",
+    "py": "wuya",
+    "camp": "后宫",
+    "desc": "德妃 → 圣母皇太后",
+    "img": "chars/wuya.jpg",
+    "src": "2903180860.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "乔引娣",
+    "py": "qiaoyindi",
+    "camp": "后宫",
+    "desc": "胤禵的人 → 被雍正留在身边",
+    "img": "chars/qiaoyindi.jpg",
+    "src": "2874024185.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "郑春华",
+    "py": "zhengchunhua",
+    "camp": "后宫",
+    "desc": "康熙嫔妃 · 与太子私通",
+    "img": "chars/zhengchunhua.jpg",
+    "src": "2528268015.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "年秋月",
+    "py": "nianqiuyue",
+    "camp": "后宫",
+    "desc": "年羹尧之妹 · 敦肃皇贵妃",
+    "img": "chars/nianqiuyue.jpg",
+    "src": "2528374723.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "苏舜卿",
+    "py": "sushunqing",
+    "camp": "后宫",
+    "desc": "漱玉院 · 刘墨林之妻",
+    "img": "chars/sushunqing.jpg",
+    "src": "2528310008.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "邬思道",
+    "py": "wusidao",
+    "camp": "臣子",
+    "desc": "雍王府幕僚 · 半隐",
+    "img": "chars/wusidao.jpg",
+    "src": "2528267732.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "张廷玉",
+    "py": "zhangtingyu",
+    "camp": "臣子",
+    "desc": "上书房 → 军机大臣",
+    "img": "chars/zhangtingyu.jpg",
+    "src": "2876717749.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "佟国维",
+    "py": "tongguowei",
+    "camp": "臣子",
+    "desc": "上书房首席 · 佟佳氏",
+    "img": "chars/tongguowei.jpg",
+    "src": "2528267152.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "隆科多",
+    "py": "longkeduo",
+    "camp": "臣子",
+    "desc": "九门提督 · 宣遗诏的人",
+    "img": "chars/longkeduo.jpg",
+    "src": "2528299864.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "年羹尧",
+    "py": "niangengyao",
+    "camp": "臣子",
+    "desc": "抚远大将军 → 赐自尽",
+    "img": "chars/niangengyao.jpg",
+    "src": "2528310145.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "田文镜",
+    "py": "tianwenjing",
+    "camp": "臣子",
+    "desc": "河南巡抚 · 新政三把刀",
+    "img": "chars/tianwenjing.jpg",
+    "src": "2528266633.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "李卫",
+    "py": "liwei",
+    "camp": "臣子",
+    "desc": "江苏巡抚 · 包衣奴才",
+    "img": "chars/liwei.jpg",
+    "src": "2528365054.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "李绂",
+    "py": "lifu",
+    "camp": "臣子",
+    "desc": "直隶总督 · 清流领袖",
+    "img": "chars/lifu.jpg",
+    "src": "2528299361.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "孙嘉诚",
+    "py": "sunjiacheng",
+    "camp": "臣子",
+    "desc": "左都御史 · 被送到年羹尧刀下",
+    "img": "chars/sunjiacheng.jpg",
+    "src": "2528299355.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "刘墨林",
+    "py": "liumolin",
+    "camp": "臣子",
+    "desc": "恩科探花 · 死于扬州",
+    "img": "chars/liumolin.jpg",
+    "src": "2528364662.jpg",
+    "rank": ""
+  },
+  {
+    "zh": "诺敏",
+    "py": "nuomin",
+    "camp": "臣子",
+    "desc": "山西巡抚 · 天下第一巡抚",
+    "img": "chars/nuomin.jpg",
+    "src": "2528299443.jpg",
+    "rank": ""
+  }
+]
