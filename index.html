@@ -380,7 +380,15 @@
                 <option value="臣子">臣子 —— 汉臣或满臣，靠办事往上走</option>
                 <option value="旗下">旗下 —— 包衣 / 旗人，主子的家里人</option>
                 <option value="布衣">布衣 —— 平民，最自由，最没有退路</option>
+                <option value="__custom__">自定义 —— 直接演剧里的人（康熙 / 胤禩 / 年羹尧…）</option>
               </select>
+            </label>
+
+            <!-- ⚠ 选了「自定义」才显示 -->
+            <label class="yz-f yz-f-2" id="f-role-custom-wrap" style="display:none">
+              <span>我要演谁</span>
+              <input id="f-role-custom" type="text"
+                     placeholder="写名字或身份，如：康熙 / 八阿哥胤禩 / 年羹尧 / 李卫">
             </label>
             <label class="yz-f yz-f-2"><span>排行（不是皇子就不填）</span>
               <select id="f-rank">
@@ -906,15 +914,33 @@
     };
     function field(id) { var e = $(id, root); return e ? (e.value || '').trim() : ''; }
 
+    /* ⚠ 身份选了「自定义」→ 露出输入框 */
+    var roleSel = $('f-role', root);
+    var roleWrap = $('f-role-custom-wrap', root);
+    function syncRole() {
+      if (!roleSel || !roleWrap) return;
+      var custom = roleSel.value === '__custom__';
+      roleWrap.style.display = custom ? '' : 'none';
+    }
+    if (roleSel) roleSel.addEventListener('change', syncRole);
+    syncRole();
+
     function build() {
       var nm = field('f-name') || '（未具名）';
-      var role = field('f-role'), age = field('f-age'), rank = field('f-rank');
+      var roleRaw = field('f-role');
+      var role = roleRaw === '__custom__'
+        ? (field('f-role-custom') || '（没写 —— 我自己就是我自己）')
+        : roleRaw;
+      var age = field('f-age'), rank = field('f-rank');
       var body = field('f-body'), look = field('f-look');
       var when = field('f-when'), bg = field('f-bg');
       var L = [];
       L.push('【雍正王朝 · 开局】', '');
       L.push('我是' + nm + '。');
-      L.push('身份：' + role + (rank && rank.indexOf('其他') !== 0 ? ' · ' + rank : ''));
+      L.push('身份：' + role + (rank && rank.indexOf('其他') !== 0 && rank ? ' · ' + rank : ''));
+      if (roleRaw === '__custom__') {
+        L.push('⚠ 我就是上面写的这个人。别给我另起一个身份，别把我写成别人。');
+      }
       if (age) L.push('年纪：' + age);
       if (body || look) L.push('形貌：' + [body, look].filter(Boolean).join('；'));
       L.push('', '我从这里开始：' + when, '');
@@ -953,8 +979,11 @@
 
     var br = $('btn-reset', root);
     if (br) br.addEventListener('click', function () {
-      ['f-name', 'f-age', 'f-body', 'f-look', 'f-bg'].forEach(function (id) { var e = $(id, root); if (e) e.value = ''; });
+      ['f-name', 'f-age', 'f-body', 'f-look', 'f-bg', 'f-role-custom'].forEach(function (id) {
+        var e = $(id, root); if (e) e.value = '';
+      });
       ['f-role', 'f-rank', 'f-when'].forEach(function (id) { var e = $(id, root); if (e) e.selectedIndex = 0; });
+      syncRole();
       var out = $('yzOut', root); if (out) out.textContent = '（填完上面，点「生成开局文书」）';
       var bs = root.querySelectorAll('.yz-bgs button');
       for (var k = 0; k < bs.length; k++) bs[k].classList.remove('on');
